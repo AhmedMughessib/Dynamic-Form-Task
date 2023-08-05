@@ -7,6 +7,7 @@ import {developerValidationSchema } from './validation';
 import UserTypeComponenet from './userTypeComponent';
 import InputFeild from './inputfields';
 import GenderInput from './genderInput';
+import DataPicker from './dataPicker';
 
 import {developerInitialValues, developerFields, initialValues } from '../helpers/developerFileds';
 
@@ -39,6 +40,7 @@ const [apiURL, setapiURL] = useState('api/addDeveloper');
             setExtraFiedls={setExtraFiedls}
             setExtraInitialValues={setExtraInitialValues}
             />
+            <DataPicker />
         
             <InputFeild name={'email'} type={'email'} label={'Email'} touched={touched} errors={errors} values={values} previusElement={'none'}/>
             <InputFeild name={'firstName'} type={'text'} label={'First Name'} touched={touched} errors={errors} values={values} previusElement={'email'} />
