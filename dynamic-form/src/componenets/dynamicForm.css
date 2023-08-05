@@ -1,0 +1,23 @@
+.input{
+  width: 320px;
+  margin: 15px;
+
+}
+
+.fomrwrpper{
+  display: flex;
+  flex-direction: row;
+}
+.birthDay{
+  width: 5px;
+}
+
+.submitBtn{
+  border: solid;
+  border-width: 1px;
+  border-color: #1976D2;
+}
+
+.test{
+  border-color: red;
+}
