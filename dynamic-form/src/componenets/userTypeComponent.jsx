@@ -5,12 +5,30 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export default function UserTypeComponenet({setUserType}) {
+import {developerInitialValues, developerFields, clientFields, clientInitialValues } from '../helpers/developerFileds';
+import {developerValidationSchema, clientValidationSchema } from './validation';
 
- const handleChangeUserType = (e) => {
-  setUserType(e.target.value)
 
- }
+export default function UserTypeComponenet(props) {
+
+const {setExtraInitialValues, setExtraFiedls, setValidationSchema, setapiURL } = props;
+
+  const handleDeveloperClick = () => {
+    setValidationSchema(developerValidationSchema);
+    setExtraInitialValues(developerInitialValues);
+    setExtraFiedls(developerFields);
+    setapiURL('/api/addadeeveloper')
+  }
+
+  const handleClientClick = () => {
+    setValidationSchema(clientValidationSchema);
+    setExtraInitialValues(clientInitialValues);
+    setExtraFiedls(clientFields);
+    setapiURL('/api/addsclient');
+  }
+
+
+ 
 
   return (
     <FormControl>
@@ -21,8 +39,8 @@ export default function UserTypeComponenet({setUserType}) {
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
       >
-        <FormControlLabel value="developer" control={<Radio />} label="Developer" onClick={handleChangeUserType}/>
-        <FormControlLabel value="client" control={<Radio />} label="Client" onClick={handleChangeUserType}/>
+        <FormControlLabel value="developer" control={<Radio />} label="Developer" onClick={handleDeveloperClick}/>
+        <FormControlLabel value="client" control={<Radio />} label="Client" onClick={handleClientClick}/>
        
       </RadioGroup>
     </FormControl>

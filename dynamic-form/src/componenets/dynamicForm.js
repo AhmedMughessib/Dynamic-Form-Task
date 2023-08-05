@@ -1,23 +1,40 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import { Formik, Form, Field } from 'formik';
-import { TextField, Button } from '@mui/material';
-import * as Yup from 'yup';
+import { Button } from '@mui/material';
 
-import {validationSchema } from './validation';
+import {developerValidationSchema } from './validation';
 import UserTypeComponenet from './userTypeComponent';
+import InputFeild from './inputfields';
+import GenderInput from './genderInput';
+import DareInput from './dataInput';
 
-import developerInputsList from './filedsData';
-const ahmed = developerInputsList[0].name
+import {developerInitialValues, developerFields, initialValues } from '../helpers/developerFileds';
+
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
+
+
+
+
+
+
+
+
 
 const DynamicForm = () => {
-const [userType, setUserType] = useState('developer')
+const [extraInitialValues,setExtraInitialValues] = useState(developerInitialValues);
+const [extraFields, setExtraFiedls] = useState(developerFields);
+const [validationSchema, setValidationSchema] = useState(developerValidationSchema);
+const [apiURL, setapiURL] = useState('api/addDeveloper');
+
+
 
 
   return (
     <div>
       <h1>Simple Form with Formik and Yup</h1>
       <Formik
-        initialValues={{ firstName: '', ahmed : ''}}
+        initialValues={{...initialValues, ...extraInitialValues}}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           console.log(values);
@@ -25,32 +42,40 @@ const [userType, setUserType] = useState('developer')
       >
         {({ errors, touched }) => (
           <Form>
-            <UserTypeComponenet setUserType={setUserType} userType={userType}/>
-            <div>
-            <Field
-            name="firstName"
-            type="text"
-            as={TextField}
-            label="Name"
-            variant="outlined"
-            fullWidth
+            <UserTypeComponenet
+            setapiURL={setapiURL}
+            setValidationSchema={setValidationSchema}
+            setExtraFiedls={setExtraFiedls}
+            setExtraInitialValues={setExtraInitialValues}
             />
-            {errors.firstName && touched.firstName && <div>{errors.firstName}</div>}
-            </div>
+          
+           
+            <InputFeild name={'email'} type={'email'} label={'Email'} touched={touched} errors={errors}/>
+            <InputFeild name={'firstName'} type={'text'} label={'First Name'} touched={touched} errors={errors}/>
+            <InputFeild name={'lastName'} type={'text'} label={'Last Name'} touched={touched} errors={errors}/>
+            <InputFeild name={'password'} type={'password'} label={'Password'} touched={touched} errors={errors}/>
+            <InputFeild name={'confirmPassword'} type={'password'} label={'Confirm Password'} touched={touched} errors={errors}/>
+            <InputFeild name={'address'} type={'text'} label={'Address'} touched={touched} errors={errors}/>
+            <InputFeild name={'phoneNumber'} type={'text'} label={'Phone Number'} touched={touched} errors={errors}/>
+            <GenderInput touched={touched} errors={errors}/>
             <div>
-            <Field
-            name={ahmed}
-            type="email"
-            as={TextField}
-            label="Email"
-            variant="outlined"
-            fullWidth
-            />
-            {errors[ahmed] && touched[ahmed] && <div>{errors[ahmed]}</div>}
+              <Field
+              name='date'
+              type='text'
+              as={DareInput}
+              label='Date'
+              variant="outlined"
+              fullWidth
+              />
+              {errors['date'] && touched['date'] && <div>{errors['date']}</div>}
             </div>
-
-
-            <Button type="submit">Submit</Button>
+            {extraFields.map((field) => {
+              return (
+                <InputFeild name={field.name} type={'text'} label={field.label} touched={touched} errors={errors}/>
+              )
+            })}
+          
+          <Button type="submit">Submit</Button>
           </Form>
         )}
       </Formik>
