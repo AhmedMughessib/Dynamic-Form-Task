@@ -4,19 +4,19 @@ const developerInitialValues = {jobTitle: '', yearsOfExperience: '', skills: ''}
 const clientInitialValues = {oranizationName: '', yearsOfExperience: '' , skillsNeeded: ''}
 
 const developerFields = [
-{name:'jobTitle', label: 'Job Title'},
-{name:'yearsOfExperience', label: 'Years Of Experience'}, 
-{name:'skills', label: 'Skills'},
+{name:'jobTitle', label: 'Job Title', previusElement: 'year'},
+{name:'yearsOfExperience', label: 'Years Of Experience', previusElement: 'jobTitle'}, 
+{name:'skills', label: 'Skills',  previusElement: 'yearsOfExperience'},
  ]
 
  const clientFields = [
-  {name:'oranizationName', label: 'Organization Name'},
-  {name:'yearsOfExperience', label: 'Years Of Experience'}, 
-  {name:'skillsNeeded', label: 'Skills Needed'},
+  {name:'oranizationName', label: 'Organization Name', previusElement: 'year'},
+  {name:'yearsOfExperience', label: 'Years Of Experience', previusElement: 'oranizationName'}, 
+  {name:'skillsNeeded', label: 'Skills Needed', previusElement: 'yearsOfExperience'},
  ]
 
 
  const initialValues = {email: '', firstName: '', lastName : '', password: '', confirmPassword: '',
- address: '', gender: '', date: new Date(), phoneNumber: ''};
+ address: '', gender: '', phoneNumber: '', day: '', month: '', year: ''};
 
  export {developerInitialValues, developerFields, clientFields, clientInitialValues, initialValues }

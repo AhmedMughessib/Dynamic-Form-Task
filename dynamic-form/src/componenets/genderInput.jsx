@@ -1,9 +1,13 @@
 import { Field } from 'formik';
 import { Select, MenuItem } from '@mui/material';
 
-const GenderInput = ({touched,errors }) => {
+const GenderInput = ({touched,errors, values, previusElement }) => {
   return (
     <div>
+      {(values[previusElement] ) && (touched[previusElement] ) && (!errors[previusElement] ) && (
+        <div>
+
+
   <Field
   name="gender"
   as={Select}
@@ -16,6 +20,8 @@ const GenderInput = ({touched,errors }) => {
   <MenuItem value="other">Other</MenuItem>
 </Field>
 {errors["gender"] && touched["gender"] && <div>{errors["gender"]}</div>}
+  </div>
+)} 
 
     </div>
   )

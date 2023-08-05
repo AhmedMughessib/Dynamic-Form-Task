@@ -1,20 +1,35 @@
-import { Field } from 'formik';
-import { TextField } from '@mui/material';
+import { Field, ErrorMessage } from 'formik';
+import './dynamicForm.css'
+import UpdatedTextField from './textField';
+import { TextField  } from '@mui/material';
 
 
 
-const InputFeild = ({name, type, label, errors, touched }) => {
+
+
+
+
+
+
+const InputFeild = ({name, type, label, errors, touched, values, previusElement }) => {
 return (
-  <div>
+  <div className='input'>
+                {(values[previusElement] || name ==='email' ) && (touched[previusElement] || name ==='email' ) && (!errors[previusElement] || name ==='email'  ) && (
+            
+            <div>
   <Field
   name={name}
   type={type}
-  as={TextField}
   label={label}
+  as={TextField}
   variant="outlined"
   fullWidth
+  customProp={[values, errors, name]}
+
   />
-  {errors[name] && touched[name] && <div>{errors[name]}</div>}
+  <ErrorMessage name={name} component="div" style={{ color: 'red', fontSize: 'small' }} />
+  </div>
+   )} 
   </div>
 )
 

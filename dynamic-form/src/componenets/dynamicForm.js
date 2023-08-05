@@ -1,34 +1,20 @@
 import {useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Button } from '@mui/material';
+import './dynamicForm.css'
 
 import {developerValidationSchema } from './validation';
 import UserTypeComponenet from './userTypeComponent';
 import InputFeild from './inputfields';
 import GenderInput from './genderInput';
-import DareInput from './dataInput';
 
 import {developerInitialValues, developerFields, initialValues } from '../helpers/developerFileds';
-
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
-
-
-
-
-
-
-
-
 
 const DynamicForm = () => {
 const [extraInitialValues,setExtraInitialValues] = useState(developerInitialValues);
 const [extraFields, setExtraFiedls] = useState(developerFields);
 const [validationSchema, setValidationSchema] = useState(developerValidationSchema);
 const [apiURL, setapiURL] = useState('api/addDeveloper');
-
-
-
 
   return (
     <div>
@@ -40,42 +26,54 @@ const [apiURL, setapiURL] = useState('api/addDeveloper');
           console.log(values);
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid, values  }) => (
           <Form>
+            <div className='fomrwrpper'>
+          <div className='fieldsColumn'>
+
+          
+
             <UserTypeComponenet
             setapiURL={setapiURL}
             setValidationSchema={setValidationSchema}
             setExtraFiedls={setExtraFiedls}
             setExtraInitialValues={setExtraInitialValues}
             />
-          
-           
-            <InputFeild name={'email'} type={'email'} label={'Email'} touched={touched} errors={errors}/>
-            <InputFeild name={'firstName'} type={'text'} label={'First Name'} touched={touched} errors={errors}/>
-            <InputFeild name={'lastName'} type={'text'} label={'Last Name'} touched={touched} errors={errors}/>
-            <InputFeild name={'password'} type={'password'} label={'Password'} touched={touched} errors={errors}/>
-            <InputFeild name={'confirmPassword'} type={'password'} label={'Confirm Password'} touched={touched} errors={errors}/>
-            <InputFeild name={'address'} type={'text'} label={'Address'} touched={touched} errors={errors}/>
-            <InputFeild name={'phoneNumber'} type={'text'} label={'Phone Number'} touched={touched} errors={errors}/>
-            <GenderInput touched={touched} errors={errors}/>
+        
+            <InputFeild name={'email'} type={'email'} label={'Email'} touched={touched} errors={errors} values={values} previusElement={'none'}/>
+            <InputFeild name={'firstName'} type={'text'} label={'First Name'} touched={touched} errors={errors} values={values} previusElement={'email'} />
+             <InputFeild name={'lastName'} type={'text'} label={'Last Name'} touched={touched} errors={errors} values={values} previusElement={'firstName'}/>
+             <InputFeild name={'password'} type={'password'} label={'Password'} touched={touched} errors={errors} values={values} previusElement='lastName'/>
+            <InputFeild name={'confirmPassword'} type={'password'} label={'Confirm Password'} touched={touched} errors={errors} values={values} previusElement='password'/>
+            <InputFeild name={'address'} type={'text'} label={'Address'} touched={touched} errors={errors} values={values} previusElement='confirmPassword'/>
+            <InputFeild name={'phoneNumber'} type={'text'} label={'Phone Number'} touched={touched} errors={errors} values={values} previusElement='address'/>
+            </div>
+            <div className='fieldsColumn'>
+
+
+            <GenderInput touched={touched} errors={errors} values={values} previusElement='phoneNumber'/>
             <div>
-              <Field
-              name='date'
-              type='text'
-              as={DareInput}
-              label='Date'
-              variant="outlined"
-              fullWidth
-              />
-              {errors['date'] && touched['date'] && <div>{errors['date']}</div>}
+              Birthday
+              <div style={{width: '20px'}} className=''>  
+                <InputFeild name={'day'} type={'text'} label={'Day'} touched={touched} errors={errors} values={values} previusElement='gender'/>
+              </div>
+              <div>  
+                <InputFeild name={'month'} type={'text'} label={'Month'} touched={touched} errors={errors} values={values} previusElement='gender'/>
+              </div>
+              <div> 
+                <InputFeild name={'year'} type={'text'} label={'Year'} touched={touched} errors={errors} values={values} previusElement='gender'/>
+              </div>
+
             </div>
             {extraFields.map((field) => {
               return (
-                <InputFeild name={field.name} type={'text'} label={field.label} touched={touched} errors={errors}/>
-              )
-            })}
+                <InputFeild name={field.name} type={'text'} label={field.label} touched={touched} errors={errors} values={values} previusElement={field.previusElement}/>
+                )
+              })} 
           
-          <Button type="submit">Submit</Button>
+              </div>
+            </div>
+          <Button type="submit" disabled={!isValid} className='submitBtn'>Submit</Button>
           </Form>
         )}
       </Formik>
